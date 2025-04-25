@@ -1,47 +1,47 @@
 soundboard/
-├── /index.html
+├── index.html
 ├── styles.css
 ├── script.js
-├── media/
-│   ├── mom.jpg
-│   ├── mom.mp3
-│   ├── dad.jpg
-│   ├── dad.mp3
+└── media/
+    ├── mom.jpg
+    ├── mom.mp3
+    ├── dad.jpg
+    ├── dad.mp3
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Family Soundboard</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Family Soundboard</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Tap to Hear a Loved One 💖</h1>
+  <h1>Tap Someone You Love 💖</h1>
   <div class="soundboard">
-    <div class="card" onclick="playSound('mom')">
-      <img src="media/mom.jpg" alt="Mom">
+    <div class="card" data-name="mom">
+      <img src="media/mom.jpg" alt="Mom" />
       <p>Mom</p>
     </div>
-    <div class="card" onclick="playSound('dad')">
-      <img src="media/dad.jpg" alt="Dad">
+    <div class="card" data-name="dad">
+      <img src="media/dad.jpg" alt="Dad" />
       <p>Dad</p>
     </div>
-    <!-- Add more cards here -->
+    <!-- Add more cards by duplicating this block and changing data-name, image, and label -->
   </div>
-
   <audio id="audioPlayer"></audio>
   <script src="script.js"></script>
 </body>
 </html>
 body {
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background: #f9f9f9;
   text-align: center;
   padding: 2rem;
+  margin: 0;
 }
 
 h1 {
-  color: #333;
+  color: #222;
 }
 
 .soundboard {
@@ -55,10 +55,10 @@ h1 {
 .card {
   cursor: pointer;
   width: 200px;
-  background: #fff;
+  background: white;
+  border-radius: 12px;
   padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
 }
 
@@ -75,10 +75,17 @@ h1 {
 .card p {
   margin-top: 0.5rem;
   font-weight: bold;
-  color: #555;
+  color: #444;
 }
-function playSound(name) {
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.card');
   const audio = document.getElementById('audioPlayer');
-  audio.src = `media/${name}.mp3`;
-  audio.play();
-}
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const name = card.getAttribute('data-name');
+      audio.src = `media/${name}.mp3`;
+      audio.play();
+    });
+  });
+});
